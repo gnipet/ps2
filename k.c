@@ -81,7 +81,7 @@ bool update(struct game *game, int dy, int dx) {
                     }
                     if (k > 0 && game->board[k - 1][j] == game->board[k][j]) {
                         game->board[k - 1][j]++;
-                        game->score += (1 << (game->board[k - 1][j] - 'A'));  // Aktualizácia skóre
+                        game->score += (1 << (game->board[k - 1][j] - 'A')) * 2;  // Aktualizácia skóre
                         game->board[k][j] = ' ';
                         changed = true;
                     }
@@ -101,7 +101,7 @@ bool update(struct game *game, int dy, int dx) {
                     }
                     if (k < SIZE - 1 && game->board[k + 1][j] == game->board[k][j]) {
                         game->board[k + 1][j]++;
-                        game->score += (1 << (game->board[k + 1][j] - 'A'));  // Aktualizácia skóre
+                        game->score += (1 << (game->board[k + 1][j] - 'A')) * 2;  // Aktualizácia skóre
                         game->board[k][j] = ' ';
                         changed = true;
                     }
@@ -121,7 +121,7 @@ bool update(struct game *game, int dy, int dx) {
                     }
                     if (k > 0 && game->board[i][k - 1] == game->board[i][k]) {
                         game->board[i][k - 1]++;
-                        game->score += (1 << (game->board[i][k - 1] - 'A'));  // Aktualizácia skóre
+                        game->score += (1 << (game->board[i][k - 1] - 'A')) * 2;  // Aktualizácia skóre
                         game->board[i][k] = ' ';
                         changed = true;
                     }
@@ -141,7 +141,7 @@ bool update(struct game *game, int dy, int dx) {
                     }
                     if (k < SIZE - 1 && game->board[i][k + 1] == game->board[i][k]) {
                         game->board[i][k + 1]++;
-                        game->score += (1 << (game->board[i][k + 1] - 'A'));  // Aktualizácia skóre
+                        game->score += (1 << (game->board[i][k + 1] - 'A')) * 2;  // Aktualizácia skóre
                         game->board[i][k] = ' ';
                         changed = true;
                     }
