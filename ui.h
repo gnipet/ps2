@@ -7,6 +7,6 @@
  * Renders the game
  * @param game the game object with board and score to render
  */
-void render(const struct game game);
+void render(const struct game *game);
 
 #endif 

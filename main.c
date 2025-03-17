@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <curses.h>
 #include "k.h"
-//#include "ui.h"
+#include "ui.h"
 
 
 int main(){
@@ -79,7 +79,7 @@ struct game game3 = {
 };
 
 printf("result: %d\n", update(&game3, 0, 1));
-//render(&game3);
+render(&game3);
 /*
 game = {
     .board = {
@@ -104,7 +104,7 @@ struct game game4 = {
 };
 
 printf("result: %d\n", update(&game4, 0, -1));
-//render(&game4);
+render(&game4);
 /*
 game = {
     .board = {

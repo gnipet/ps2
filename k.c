@@ -3,15 +3,16 @@
 #include "k.h"
 
 void add_random_tile(struct game *game){
+    if (game==NULL) exit(1); // ukonči ak je chyba
     int row, col;
     // find random, but empty tile
     do{
-        row = rand() % SIZE;
-        col = rand() % SIZE;
-    }while(game->board[row][col] != ' ');
+        row = rand() % SIZE;	// náhodný riadok (modulo zabezpečí rozsah)
+        col = rand() % SIZE;	// náhodný stľpec
+    }while(game->board[row][col] != ' ');	// opakuj pokiaľ nenájdeš prázdne pole
 
     // place to the random position 'A' or 'B' tile
-    if(rand() % 2 == 0){
+    if(rand() % 2 == 0){	// modulo 2 zabezpečí 0 a 1 , ak je 0 umiestni A inak umiestni B
         game->board[row][col] = 'A';
     }else{
         game->board[row][col] = 'B';
@@ -19,7 +20,7 @@ void add_random_tile(struct game *game){
 }
 
 
-bool is_game_won(const struct game game) {
+bool is_game_won(const struct game game) { 	
     // Prechádzame hernou plochou
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -46,10 +47,10 @@ bool is_move_possible(const struct game game) {
     // Kontrola, či existujú dve rovnaké písmená vedľa seba
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            if (j < SIZE - 1 && game.board[i][j] == game.board[i][j + 1]) {
+            if (j < SIZE - 1 && game.board[i][j] == game.board[i][j + 1]) { 	// ak nie sme na konci a 2 susedné v riadku sú rovnaké 
                 return true;
             }
-            if (i < SIZE - 1 && game.board[i][j] == game.board[i + 1][j]) {
+            if (i < SIZE - 1 && game.board[i][j] == game.board[i + 1][j]) {	// ak nie sme na konci a 2 susedné v stľpci sú rovnaké
                 return true;
             }
         }
@@ -60,8 +61,9 @@ bool is_move_possible(const struct game game) {
 
 
 bool update(struct game *game, int dy, int dx) {
+    if (game==NULL) return NULL; 
     // Kontrola platnosti smeru
-    if ((dy == 0 && dx == 0) || (dy != 0 && dx != 0)) {
+    if ((dy == 0 && dx == 0) || (dy != 0 && dx != 0)) {		// ak sú to nulové hodnoty, koniec
         return false;  // Nesprávny smer
     }
 
@@ -71,19 +73,19 @@ bool update(struct game *game, int dy, int dx) {
     if (dy == -1) {  // Smer hore
         for (int j = 0; j < SIZE; j++) {
             for (int i = 1; i < SIZE; i++) {
-                if (game->board[i][j] != ' ') {
-                    int k = i;
-                    while (k > 0 && game->board[k - 1][j] == ' ') {
-                        game->board[k - 1][j] = game->board[k][j];
-                        game->board[k][j] = ' ';
-                        k--;
-                        changed = true;
+                if (game->board[i][j] != ' ') { 	// ak je to prázdny znak nemáme čo posúvať
+                    int k = i;		// nemôžeme meniť i (ak posúvam hore dole mením riadok) tak si zavedieme pomocnú premennú 
+                    while (k > 0 && game->board[k - 1][j] == ' ') { 	// ak k je aspon 1 (som an existujucom riadku a viem sa posúvať hore k-1 a znak kde chcem ísť musí byť prázdny) 
+                        game->board[k - 1][j] = game->board[k][j];	// posuň sa
+                        game->board[k][j] = ' ';			// na znak z ktorého som sa posunul označ ako voľný
+                        k--;						// potrebujeme kontrolovať či aj znak vedľa je rovnaký
+                        changed = true;					// indikácia že som posúval
                     }
-                    if (k > 0 && game->board[k - 1][j] == game->board[k][j]) {
-                        game->board[k - 1][j]++;
-                        game->score += (1 << (game->board[k - 1][j] - 'A')) * 2;  // Aktualizácia skóre
-                        game->board[k][j] = ' ';
-                        changed = true;
+                    if (k > 0 && game->board[k - 1][j] == game->board[k][j]) {		// kontrola, či znak na ktorý som predtým posunul bol rovnaký ako ten čo som posúval
+                        game->board[k - 1][j]++;					// ak bol rovnaký potom zmaň znak an ďalší v poradí
+                        game->score += (1 << (game->board[k - 1][j] - 'A')) * 2;	// Aktualizácia skóre = bitový posun doľava (1 << x) znamená 2^x
+                        game->board[k][j] = ' ';					// ok si posunul daj prázdny znak
+                        changed = true;							// indikácia že som posúval
                     }
                 }
             }
