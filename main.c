@@ -4,7 +4,7 @@
 #include <curses.h>
 #include "k.h"
 #include "ui.h"
-
+#include "hof.h"
 
 int main(){
 
@@ -18,7 +18,6 @@ struct game game = {
     },
     .score = 0
 };
-
 printf("is won: %d\n", is_game_won(game));
 // stdout: 1
 // game is not won
@@ -117,6 +116,40 @@ game = {
 };
 result = false;
 */
+
+
+ // Pole štruktúr pre Hall of Fame
+    struct player hof[10] = {0};
+
+    // Načítanie Hall of Fame zo súboru "score"
+    int count = load(hof);
+
+    if (count == -1) {
+        printf("Chyba: Súbor sa nepodarilo načítať alebo má nesprávny formát.\n");
+    } else {
+        // Výpis načítaných hodnôt
+        printf("result: %d\n", count);
+    }
+
+
+struct player hof2[10] = {
+        {"Jozef", 600},
+        {"Miroslav", 550},
+        {"Ivan", 500},
+        {"Katarina", 450},
+        {"Marek", 400}
+    };
+
+    // Uloženie Hall of Fame do súboru
+    bool result = save(hof2, 5);
+
+    if (result) {
+        printf("Hall of Fame bola úspešne uložená.\n");
+    } else {
+        printf("Chyba: Hall of Fame sa nepodarilo uložiť.\n");
+    }
+
+
 
 
 
