@@ -93,7 +93,7 @@ bool add_player(struct player list[], int *size, const struct player player) {
 
     // Nájdenie pozície, kam sa hráč zaradí
     int pos = *size;
-    while (pos > 0 && list[pos - 1].score < player.score) {
+    while (pos > 0 && list[pos - 1].score <= player.score) {
         pos--;
     }
 
