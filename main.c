@@ -118,20 +118,22 @@ result = false;
 */
 
 
+printf("Test funkcie Load.\n");
  // Pole štruktúr pre Hall of Fame
-    struct player hof[10] = {0};
-
+//printf("Test1.\n");
+ struct player hof[10] = {0};
+//printf("Test2.\n");
     // Načítanie Hall of Fame zo súboru "score"
     int count = load(hof);
-
+//printf("Test3.\n");
     if (count == -1) {
-        printf("Chyba: Súbor sa nepodarilo načítať alebo má nesprávny formát.\n");
+printf("Chyba: Súbor sa nepodarilo načítať alebo má nesprávny formát.\n");
     } else {
         // Výpis načítaných hodnôt
         printf("result: %d\n", count);
     }
 
-
+printf("Test funkcie Save.\n");
 struct player hof2[10] = {
         {"Jozef", 600},
         {"Miroslav", 550},
@@ -149,6 +151,28 @@ struct player hof2[10] = {
         printf("Chyba: Hall of Fame sa nepodarilo uložiť.\n");
     }
 
+printf("Test funkcie Add_player.\n");
+struct player list[10];
+struct player player = {
+    .name = "peter",
+    .score = 300
+};
+int size = load(list);
+printf("%d",size);
+bool result2 = add_player(list, &size, player);
+if (result2) {
+        printf("Hráč sa dostal do Hall of Fame.\n");
+    } else {
+        printf("Málo bodov na Hall of Fam.\n");
+    }
+
+bool result3 = save(list, size);
+
+    if (result3) {
+        printf("Hall of Fame bola úspešne uložená.\n");
+    } else {
+        printf("Chyba: Hall of Fame sa nepodarilo uložiť.\n");
+    }
 
 
 

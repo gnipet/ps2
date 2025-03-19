@@ -2,7 +2,7 @@ OUTPUT=ps2
 CC=gcc
 CFLAGS=-std=c11 -Wall -Werror -Wconversion
 LDLIBS=-lm
-SOURCES=main.c k.c ui.c
+SOURCES=main.c k.c ui.c hof.c
 CPPCHECK=cppcheck --enable=performance,unusedFunction --error-exitcode=1
 FORMAT_CODE=uncrustify --no-backup --replace -q -c ../uncrustify.cfg
 
